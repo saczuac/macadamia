@@ -1,5 +1,11 @@
 import datetime
-import urllib.parse
+
+try:
+    # python3
+    from urllib.parse import unquote
+except ImportError:
+     # python2
+     from urlparse import unquote
 
 
 def parse_campaign_data(data):
@@ -13,7 +19,7 @@ def parse_campaign_data(data):
     }
 
     fields = [d.split("=") for d in data.split("|")]
-    info = dict((human_names[d[0]], urllib.parse.unquote(d[1])) for d in fields)
+    info = dict((human_names[d[0]], unquote(d[1])) for d in fields)
 
     return info
 
